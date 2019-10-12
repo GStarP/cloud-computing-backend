@@ -4,6 +4,7 @@ import com.nju.cloudcomputingbackend.model.HottestUniversityList;
 import com.nju.cloudcomputingbackend.model.ResponseMsg;
 import com.nju.cloudcomputingbackend.service.APIService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @des 提供 API 接口
  */
 @RestController
+@CrossOrigin("http://localhost:8086")
 public class APIController {
 
     @Autowired
