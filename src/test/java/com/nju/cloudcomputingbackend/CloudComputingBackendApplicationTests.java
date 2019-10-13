@@ -8,6 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.ResourceUtils;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,6 +26,19 @@ public class CloudComputingBackendApplicationTests {
 		Assert.assertEquals("2019-08", res.getTime());
 		Assert.assertEquals("南京大学", res.getNameList().get(0));
 		assert(848 == res.getRankList().get(0));
+	}
+
+	@Test
+	public void testFilePath() {
+		try {
+			String path = "src\\main\\resources\\rank\\2010-05.json";
+			FileReader reader = new FileReader(path);
+			BufferedReader br = new BufferedReader(reader);
+			String line = br.readLine();
+			System.out.println(line);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

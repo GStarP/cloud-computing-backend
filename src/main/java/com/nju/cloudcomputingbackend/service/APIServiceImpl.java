@@ -6,6 +6,7 @@ import com.nju.cloudcomputingbackend.model.HottestUniversityList;
 import com.nju.cloudcomputingbackend.utils.JSONUtil;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 @Service
@@ -13,10 +14,21 @@ public class APIServiceImpl implements APIService{
 
     @Override
     public HottestUniversityList getHottestUniversityByMonth(String time) {
-        HottestUniversityList list = new HottestUniversityList();
-
-        String filePath = "F:\\HXW\\JavaProject\\cloud-computing-backend\\src\\main\\resources\\" + time + ".json";
+        String filePath = "src\\main\\resources\\rank\\" + time + ".json";
         JSONObject json = JSONUtil.readJsonObject(filePath);
+        if (null == json) {
+            if (JSONUtil.updateJsonFiles(time)) {
+                return jsonToHUL(json);
+            } else {
+                return null;
+            }
+        } else {
+            return jsonToHUL(json);
+        }
+    }
+
+    private HottestUniversityList jsonToHUL(JSONObject json) {
+        HottestUniversityList list = new HottestUniversityList();
 
         list.setTime(json.getString("time"));
 
@@ -31,6 +43,13 @@ public class APIServiceImpl implements APIService{
         list.setNameList(nameList);
         list.setRankList(rankList);
 
+        System.out.println(list.getTime());
+        for (String s : list.getNameList()) {
+            System.out.print(s +" ");
+        }
+        for (Integer i : list.getRankList()) {
+            System.out.print(i +" ");
+        }
         return list;
     }
 
