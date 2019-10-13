@@ -24,8 +24,8 @@ public class CloudComputingBackendApplicationTests {
 	public void testGetHottestUniversityByMonth() {
 		HottestUniversityList res = apiService.getHottestUniversityByMonth("2019-08");
 		Assert.assertEquals("2019-08", res.getTime());
-		Assert.assertEquals("南京大学", res.getNameList().get(0));
-		assert(848 == res.getRankList().get(0));
+		Assert.assertEquals("武汉大学", res.getNameList().get(0));
+		assert(11315734 == res.getRankList().get(0));
 	}
 
 	@Test
