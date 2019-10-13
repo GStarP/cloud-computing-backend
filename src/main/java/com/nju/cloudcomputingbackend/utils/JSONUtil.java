@@ -10,6 +10,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.nju.cloudcomputingbackend.model.MonthRank;
 import org.bson.Document;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
@@ -26,18 +27,18 @@ public class JSONUtil {
     private static String mongoHost = "http://heiming.xyz";
     private static int mongoPort = 27017;
     private static String dbName = "university_heat";
-    private static String universityListFile = "src\\main\\resources\\university_list.txt";
+    private static String universityListFile = "\\static\\university_list.txt";
 
-    public static JSONObject readJsonObject(String file) {
+    public static JSONObject readJsonObject(InputStream is) {
         String jsonStr;
         try {
-            File jsonFile = new File(file);
-            Reader reader = new InputStreamReader(new FileInputStream(jsonFile),"utf-8");
+            Reader reader = new InputStreamReader(is,"utf-8");
             int ch = 0;
             StringBuffer sb = new StringBuffer();
             while ((ch = reader.read()) != -1) {
                 sb.append((char) ch);
             }
+            is.close();
             reader.close();
             jsonStr = sb.toString();
             JSONObject object = JSON.parseObject(jsonStr);
@@ -114,15 +115,17 @@ public class JSONUtil {
     public static ArrayList<String[]> getUniversityList() {
         try {
             ArrayList<String[]> res = new ArrayList<>();
-            FileReader reader = new FileReader(universityListFile);
-            BufferedReader br = new BufferedReader(reader);
+            InputStream is = new ClassPathResource(universityListFile).getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
             String line = br.readLine();
             while (null != line) {
                 String[] tmp = line.split(" ");
                 res.add(tmp);
             }
             br.close();
-            reader.close();
+            isr.close();
+            is.close();
             return res;
         } catch (Exception e) {
             e.printStackTrace();

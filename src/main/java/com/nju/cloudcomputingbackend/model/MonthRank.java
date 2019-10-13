@@ -27,7 +27,7 @@ public class MonthRank {
         for (int i = 0; i < 5; i++) {
             JSONObject object = new JSONObject();
             object.put("name", list.get(i).getKey());
-            object.put("rank", list.get(i).getValue());
+            object.put("static", list.get(i).getValue());
             array.add(object);
         }
         return array;

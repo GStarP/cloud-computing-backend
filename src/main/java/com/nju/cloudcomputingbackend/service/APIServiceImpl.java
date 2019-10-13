@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.nju.cloudcomputingbackend.model.HottestUniversityList;
 import com.nju.cloudcomputingbackend.utils.JSONUtil;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
-import java.math.BigInteger;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 @Service
@@ -14,16 +16,21 @@ public class APIServiceImpl implements APIService{
 
     @Override
     public HottestUniversityList getHottestUniversityByMonth(String time) {
-        String filePath = "src\\main\\resources\\rank\\" + time + ".json";
-        JSONObject json = JSONUtil.readJsonObject(filePath);
-        if (null == json) {
-            if (JSONUtil.updateJsonFiles(time)) {
-                return jsonToHUL(json);
+        try {
+            InputStream is = new ClassPathResource("\\static\\rank\\" + time + ".json").getInputStream();
+            JSONObject json = JSONUtil.readJsonObject(is);
+            if (null == json) {
+                if (JSONUtil.updateJsonFiles(time)) {
+                    return jsonToHUL(json);
+                } else {
+                    return null;
+                }
             } else {
-                return null;
+                return jsonToHUL(json);
             }
-        } else {
-            return jsonToHUL(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

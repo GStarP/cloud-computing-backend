@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @des 提供 API 接口
  */
 @RestController
-@CrossOrigin("http://localhost:8086")
+@CrossOrigin("*")
 public class APIController {
 
     @Autowired
