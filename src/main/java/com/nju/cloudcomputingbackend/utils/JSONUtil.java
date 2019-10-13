@@ -28,6 +28,10 @@ public class JSONUtil {
     private static int mongoPort = 27017;
     private static String dbName = "university_heat";
     private static String universityListFile = "\\static\\university_list.txt";
+    private static int likeNumW = 1;
+    private static int commentNumW = 2;
+    private static int repostNumW = 3;
+    private static double lowDownW = 0.5;
 
     public static JSONObject readJsonObject(InputStream is) {
         String jsonStr;
@@ -77,10 +81,15 @@ public class JSONUtil {
 
             FindIterable<Document> find = col.find();
             MongoCursor<Document> it = find.iterator();
+            Document cur;
             while (it.hasNext()) {
                 Document doc = it.next();
                 String uniName = uniList.get(i)[1];
-                BigInteger total = BigInteger.valueOf(doc.getInteger("likeNum") + doc.getInteger("repostNum") + doc.getInteger("commentNum"));
+                BigInteger total = BigInteger.valueOf(
+                        doc.getInteger("likeNum") * likeNumW +
+                        doc.getInteger("repostNum") * repostNumW +
+                        doc.getInteger("commentNum") * commentNumW
+                );
                 String month = doc.getString("month");
                 if (month.equals(time)) {
                     monthRank.getMap().put(uniName, total);
