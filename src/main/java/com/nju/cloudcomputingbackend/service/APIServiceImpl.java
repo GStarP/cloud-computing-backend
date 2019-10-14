@@ -3,6 +3,7 @@ package com.nju.cloudcomputingbackend.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.nju.cloudcomputingbackend.model.HottestUniversityList;
+import com.nju.cloudcomputingbackend.model.RankPair;
 import com.nju.cloudcomputingbackend.utils.JSONUtil;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.util.ResourceUtils;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class APIServiceImpl implements APIService{
@@ -27,6 +29,86 @@ public class APIServiceImpl implements APIService{
                 }
             } else {
                 return jsonToHUL(json);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<RankPair> getPageRankList() {
+        try {
+            InputStream is = new ClassPathResource("\\static\\graphx\\follows_pagerank.json").getInputStream();
+            JSONObject json = JSONUtil.readJsonObject(is);
+            if (null == json) {
+                if (true) { // TODO
+                    return jsonToRankList(json, 11);
+                } else {
+                    return null;
+                }
+            } else {
+                return jsonToRankList(json, 11);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<RankPair> getTriangleRankList() {
+        try {
+            InputStream is = new ClassPathResource("\\static\\graphx\\follows_triangle_count.json").getInputStream();
+            JSONObject json = JSONUtil.readJsonObject(is);
+            if (null == json) {
+                if (true) { // TODO
+                    return jsonToRankList(json, 11);
+                } else {
+                    return null;
+                }
+            } else {
+                return jsonToRankList(json, 11);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public RankPair getMostInDegree() {
+        try {
+            InputStream is = new ClassPathResource("\\static\\graphx\\at_inDegree.json").getInputStream();
+            JSONObject json = JSONUtil.readJsonObject(is);
+            if (null == json) {
+                if (true) { // TODO
+                    return jsonToRankList(json, 1).get(0);
+                } else {
+                    return null;
+                }
+            } else {
+                return jsonToRankList(json, 1).get(0);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public RankPair getMostOutDegree() {
+        try {
+            InputStream is = new ClassPathResource("\\static\\graphx\\at_outDegree.json").getInputStream();
+            JSONObject json = JSONUtil.readJsonObject(is);
+            if (null == json) {
+                if (true) { // TODO
+                    return jsonToRankList(json, 1).get(0);
+                } else {
+                    return null;
+                }
+            } else {
+                return jsonToRankList(json, 1).get(0);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -58,6 +140,19 @@ public class APIServiceImpl implements APIService{
             System.out.print(i +" ");
         }
         return list;
+    }
+
+    private List<RankPair> jsonToRankList(JSONObject json, int length) {
+        List<RankPair> res = new ArrayList<>();
+        JSONArray arr = json.getJSONArray("rankList");
+        for (int i = 0; i < length; i++) {
+            RankPair rankPair = new RankPair();
+            JSONObject obj = (JSONObject) arr.get(i);
+            rankPair.setName(obj.getString("name"));
+            rankPair.setRank(obj.getDouble("rank"));
+            res.add(rankPair);
+        }
+        return res;
     }
 
 }

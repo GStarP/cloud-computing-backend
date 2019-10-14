@@ -1,6 +1,9 @@
 package com.nju.cloudcomputingbackend.service;
 
 import com.nju.cloudcomputingbackend.model.HottestUniversityList;
+import com.nju.cloudcomputingbackend.model.RankPair;
+
+import java.util.List;
 
 /**
  * @author hxw
@@ -14,5 +17,17 @@ public interface APIService {
      * @return { "time": "2019-05", "nameList": ["南京大学", "复旦大学"], "rankList": [544,368] }
      */
     public HottestUniversityList getHottestUniversityByMonth(String time);
+
+    /**
+     * @des 获取 PageRank 结果
+     * @return [{ "name": "南京大学", "rank": 2.0145}]
+     */
+    public List<RankPair> getPageRankList();
+
+    public List<RankPair> getTriangleRankList();
+
+    public RankPair getMostInDegree();
+
+    public RankPair getMostOutDegree();
 
 }
