@@ -42,6 +42,25 @@
 			<version>3.10.2</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.spark/spark-graphx -->
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-graphx_2.12</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_2.12</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>14.0.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
