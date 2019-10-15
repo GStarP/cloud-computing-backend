@@ -24,7 +24,7 @@ object InDegree {
       .sortBy { case (degree, name) => -degree }
       .map { case (degree, name) => String.format(rankPattern, name, degree.toString) }
       .collect().mkString(",")
-    val at_pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("output/graphX/at_inDegree.json")), true)
+    val at_pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("/my/json/graphx/at_inDegree.json")), true)
     at_pw.println(String.format(jsonPattern, atResult))
     at_pw.close()
 
@@ -33,7 +33,7 @@ object InDegree {
       .sortBy { case (degree, name) => -degree }
       .map { case (degree, name) => String.format(rankPattern, name, degree.toString) }
       .collect().mkString(",")
-    val pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("output/graphX/follows_inDegree.json")), true)
+    val pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("/my/json/graphx/follows_inDegree.json")), true)
     pw.println(String.format(jsonPattern, followResult))
     pw.close()
   }

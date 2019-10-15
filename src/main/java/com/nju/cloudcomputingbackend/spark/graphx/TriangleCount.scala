@@ -32,7 +32,7 @@ object TriangleCount {
     val followsResult = followsGraph.triangleCount().vertices.sortBy(_._2, ascending = false)
       .map { case (id, rank) => String.format(rankPattern, universityHashCode(id.toString), rank.toString) }.collect()
       .mkString(",")
-    val pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("output/graphX/follows_triangle_count.json")), true)
+    val pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("/my/json/graphX/follows_triangle_count.json")), true)
     pw.println(String.format(jsonPattern, followsResult))
     pw.close()
   }

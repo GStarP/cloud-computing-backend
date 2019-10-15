@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nju.cloudcomputingbackend.model.HottestUniversityList;
 import com.nju.cloudcomputingbackend.model.RankPair;
 import com.nju.cloudcomputingbackend.utils.JSONUtil;
+import com.nju.cloudcomputingbackend.utils.SparkUtil;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -42,7 +43,7 @@ public class APIServiceImpl implements APIService{
             InputStream is = new ClassPathResource("\\static\\graphx\\follows_pagerank.json").getInputStream();
             JSONObject json = JSONUtil.readJsonObject(is);
             if (null == json) {
-                if (true) { // TODO
+                if (SparkUtil.updatePageRankJson()) {
                     return jsonToRankList(json, 11);
                 } else {
                     return null;
@@ -62,7 +63,7 @@ public class APIServiceImpl implements APIService{
             InputStream is = new ClassPathResource("\\static\\graphx\\follows_triangle_count.json").getInputStream();
             JSONObject json = JSONUtil.readJsonObject(is);
             if (null == json) {
-                if (true) { // TODO
+                if (SparkUtil.updateTriangleJson()) {
                     return jsonToRankList(json, 11);
                 } else {
                     return null;
@@ -82,7 +83,7 @@ public class APIServiceImpl implements APIService{
             InputStream is = new ClassPathResource("\\static\\graphx\\at_inDegree.json").getInputStream();
             JSONObject json = JSONUtil.readJsonObject(is);
             if (null == json) {
-                if (true) { // TODO
+                if (SparkUtil.updateInDegreeJson()) {
                     return jsonToRankList(json, 1).get(0);
                 } else {
                     return null;
@@ -102,7 +103,7 @@ public class APIServiceImpl implements APIService{
             InputStream is = new ClassPathResource("\\static\\graphx\\at_outDegree.json").getInputStream();
             JSONObject json = JSONUtil.readJsonObject(is);
             if (null == json) {
-                if (true) { // TODO
+                if (SparkUtil.updateOutDegreeJson()) {
                     return jsonToRankList(json, 1).get(0);
                 } else {
                     return null;

@@ -30,7 +30,7 @@ object PageRank {
     val rankedResult = ranksByUsername.sortBy(item => item._1, ascending = false)
       .map { case (rank, name) => String.format(rankPattern, name, rank.toString) }
       .collect().mkString(",")
-    val pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("output/graphX/follows_pagerank.json")), true)
+    val pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream("/my/json/graphx/follows_pagerank.json")), true)
     pw.println(String.format(jsonPattern, rankedResult))
     pw.close()
   }

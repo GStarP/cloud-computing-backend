@@ -4,6 +4,7 @@ import com.nju.cloudcomputingbackend.model.HottestUniversityList;
 import com.nju.cloudcomputingbackend.model.RankPair;
 import com.nju.cloudcomputingbackend.model.ResponseMsg;
 import com.nju.cloudcomputingbackend.service.APIService;
+import com.nju.cloudcomputingbackend.utils.SparkUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -95,6 +96,17 @@ public class APIController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseMsg.buildFailureResponse("获取失败!");
+        }
+    }
+
+    @GetMapping("/test-update")
+    public ResponseMsg testUpdate() {
+        try {
+            SparkUtil.updateInDegreeJson();
+            return ResponseMsg.buildSuccessResponse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseMsg.buildFailureResponse("调用失败!");
         }
     }
 }
